@@ -1,5 +1,4 @@
 import streamlit as st
-from dotenv import load_dotenv
 import pickle
 from PyPDF2 import PdfReader
 from streamlit_extras.add_vertical_space import add_vertical_space
@@ -25,13 +24,10 @@ with st.sidebar:
     add_vertical_space(5)
     st.write('Realizada por el equipo de Data de Bineo')
 
-
-def configure():
-    load_dotenv()
+API_KEY = st.secrets["OPENAI_API_KEY"]
  
 def main():
-    configure()
-    
+
     st.header("Chatea con un PDF 💬")
  
  
@@ -78,7 +74,7 @@ def main():
         if query:
             docs = VectorStore.similarity_search(query=query, k=3)
  
-            llm = OpenAI()
+            llm = OpenAI(openai_api_key=API_KEY)
             chain = load_qa_chain(llm=llm, chain_type="stuff")
             with get_openai_callback() as cb:
                 response = chain.run(input_documents=docs, question=query)
