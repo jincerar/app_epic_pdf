@@ -43,7 +43,7 @@ def main():
             text += page.extract_text()
  
         text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1500,
+            chunk_size=900,
             chunk_overlap=200,
             length_function=len
             )
